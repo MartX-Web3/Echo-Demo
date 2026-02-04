@@ -3,7 +3,8 @@ import { useAccount } from 'wagmi'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ConnectButton } from '@/components/ConnectButton'
-import { ArrowRight, ShieldCheck, KeyRound, Zap } from 'lucide-react'
+import { HowEchoWorks, WithoutVsWithEcho } from '@/components/HowEchoWorks'
+import { ArrowRight, Sparkles } from 'lucide-react'
 
 export function ConnectPage() {
   const navigate = useNavigate()
@@ -14,62 +15,61 @@ export function ConnectPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 max-w-3xl mx-auto">
       {/* Hero Section */}
       <div className="text-center space-y-4">
-        <h1 className="text-3xl font-bold tracking-tight">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
+          <Sparkles className="h-4 w-4" />
+          <span>AI Agent Authorization Layer</span>
+        </div>
+
+        <h1 className="text-4xl font-bold tracking-tight">
           Echo Policy Demo
         </h1>
-        <div className="max-w-2xl mx-auto space-y-2">
+
+        <div className="max-w-xl mx-auto space-y-2">
           <p className="text-xl text-muted-foreground">
-            You are not approving transactions.
+            Give AI agents spending authority
           </p>
           <p className="text-xl font-semibold text-foreground">
-            You are defining authority.
+            without sharing your private keys.
           </p>
         </div>
       </div>
 
-      {/* Key Points */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-        <Card>
-          <CardContent className="pt-6 text-center space-y-2">
-            <KeyRound className="h-8 w-8 mx-auto text-primary" />
-            <p className="font-medium">No Private Keys Shared</p>
-            <p className="text-sm text-muted-foreground">
-              Your keys never leave your wallet
-            </p>
-          </CardContent>
-        </Card>
+      {/* How It Works */}
+      <Card className="border-2">
+        <CardContent className="pt-6">
+          <HowEchoWorks variant="full" />
+        </CardContent>
+      </Card>
 
-        <Card>
-          <CardContent className="pt-6 text-center space-y-2">
-            <ShieldCheck className="h-8 w-8 mx-auto text-primary" />
-            <p className="font-medium">Define Once</p>
-            <p className="text-sm text-muted-foreground">
-              Set boundaries, not approve each action
-            </p>
-          </CardContent>
-        </Card>
+      {/* Before/After Comparison */}
+      <WithoutVsWithEcho />
 
-        <Card>
-          <CardContent className="pt-6 text-center space-y-2">
-            <Zap className="h-8 w-8 mx-auto text-primary" />
-            <p className="font-medium">AI Operates Safely</p>
-            <p className="text-sm text-muted-foreground">
-              Within your defined authority
+      {/* x402 Protocol Explainer */}
+      <div className="p-4 rounded-xl bg-muted/30 border">
+        <div className="flex items-start gap-3">
+          <div className="h-8 w-8 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+            <span className="text-blue-600 font-mono text-xs font-bold">402</span>
+          </div>
+          <div className="space-y-1">
+            <p className="text-sm font-medium">Built on x402 Protocol</p>
+            <p className="text-xs text-muted-foreground">
+              x402 enables machine-to-machine payments. Your AI agent can pay for services (APIs, data feeds, compute)
+              using your signed authority — without ever touching your private keys.
             </p>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
       {/* Connect Section */}
-      <Card className="max-w-md mx-auto">
+      <Card className="border-primary/20">
         <CardContent className="pt-6 space-y-6">
           <div className="space-y-2 text-center">
-            <h2 className="text-lg font-semibold">Connect Your Wallet</h2>
+            <h2 className="text-lg font-semibold">Try the Demo</h2>
             <p className="text-sm text-muted-foreground">
-              Connect to define what your AI agent can do
+              Connect your wallet to define AI authority and watch it operate safely.
             </p>
           </div>
 
@@ -83,12 +83,17 @@ export function ConnectPage() {
               className="w-full"
               size="lg"
             >
-              Continue to Define AI Authority
+              Define AI Authority
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           )}
         </CardContent>
       </Card>
+
+      {/* Footer Note */}
+      <p className="text-center text-xs text-muted-foreground">
+        This is a demo. No real funds will be moved.
+      </p>
     </div>
   )
 }
