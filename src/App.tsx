@@ -2,6 +2,7 @@ import { WagmiProvider } from 'wagmi'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAccount } from 'wagmi'
+import { Analytics } from '@vercel/analytics/react'
 import { config } from '@/config/wagmi'
 import { PolicyProvider, usePolicy } from '@/context/PolicyContext'
 import { Layout } from '@/components/Layout'
@@ -76,6 +77,7 @@ function App() {
           </PolicyProvider>
         </BrowserRouter>
       </QueryClientProvider>
+      <Analytics />
     </WagmiProvider>
   )
 }
