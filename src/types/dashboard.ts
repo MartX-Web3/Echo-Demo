@@ -10,6 +10,8 @@ export interface ActivityEvent {
   id: string
   timestamp: string
   status: ActivityStatus
+  // AI's thought before action
+  aiThought: string
   // What AI tried/executed
   action: {
     purpose: string
@@ -17,10 +19,10 @@ export interface ActivityEvent {
     token?: string
     target: string
   }
-  // User-friendly explanation
-  explanation: string
-  // What AI learned (for rejections)
-  aiLearning?: string
+  // What AI concluded after result
+  aiConclusion: string
+  // Which policy rule caused rejection (for rejected events)
+  policyRule?: string
   // Spend tracking (for authorized)
   spendSummary?: string
 }

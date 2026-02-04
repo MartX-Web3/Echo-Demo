@@ -8,10 +8,10 @@ import type { ActivityEvent, TaskConfig } from '@/types/dashboard'
 export const DEFAULT_TASK: TaskConfig = {
   userPrompt: 'Monitor market sentiment and place bids when conditions are favorable. Operate automatically within my signed authority.',
   aiResponse: [
-    'Monitor on-chain sentiment signals',
-    'Attempt permitted actions only',
-    'Learn from policy rejections',
-    'Never access your private keys',
+    'Monitor sentiment signals',
+    'Execute within policy bounds',
+    'Learn from rejections',
+    'Never access your keys',
   ],
 }
 
@@ -22,69 +22,74 @@ export const SUGGESTED_TASKS = [
   'Fetch analytics data and process results',
 ]
 
-// Demo events - user-friendly format
+// Demo events with AI thought process - showcasing rejection → learning pattern
 export const DEMO_EVENTS: ActivityEvent[] = [
   {
     id: '1',
     timestamp: '10:02',
     status: 'rejected',
+    aiThought: "To optimize quickly, let me consolidate treasury funds first for faster operations.",
     action: {
       purpose: 'treasury.transfer',
       amount: 40,
       token: 'USDC',
       target: 'internal treasury',
     },
-    explanation: 'This action is outside what you authorized.',
-    aiLearning: 'Treasury operations are not permitted. Adjusting strategy.',
+    aiConclusion: "Blocked. Treasury operations aren't in my authority. I'll focus on permitted actions instead.",
+    policyRule: 'Purpose not in allowlist',
   },
   {
     id: '2',
     timestamp: '10:03',
     status: 'rejected',
+    aiThought: "Need market data. Let me try this alternative sentiment API for better coverage.",
     action: {
       purpose: 'sentiment.fetch',
       target: 'https://random-api.com',
     },
-    explanation: 'This endpoint is not on your approved list.',
-    aiLearning: 'Only approved x402 endpoints can receive payments. Switching to whitelisted provider.',
+    aiConclusion: "Endpoint not whitelisted. I must use only approved x402 endpoints. Switching to Genvox.",
+    policyRule: 'Endpoint not whitelisted',
   },
   {
     id: '3',
     timestamp: '10:04',
     status: 'authorized',
+    aiThought: "Using approved Genvox API this time. Should work within my authority.",
     action: {
       purpose: 'sentiment.fetch',
       amount: 0.03,
       token: 'USDC',
-      target: 'https://api.genvox.io/v1/sentiment',
+      target: 'api.genvox.io',
     },
-    explanation: 'Purpose is allowed, endpoint is approved, amount is within limits.',
+    aiConclusion: "Data received. ETH sentiment is positive (0.78). Good signal for bidding.",
     spendSummary: '0.03 / 120 USDC',
   },
   {
     id: '4',
     timestamp: '10:05',
     status: 'authorized',
+    aiThought: "Sentiment positive. Time to place a conservative bid within my limits.",
     action: {
       purpose: 'auction.bid',
       amount: 12.5,
       token: 'USDC',
-      target: 'https://api.yourdemo.com/auction',
+      target: 'api.yourdemo.com/auction',
     },
-    explanation: 'Purpose is allowed, endpoint is approved, amount is within limits.',
+    aiConclusion: "Bid placed successfully. Monitoring auction result now.",
     spendSummary: '12.53 / 120 USDC',
   },
   {
     id: '5',
     timestamp: '10:06',
     status: 'authorized',
+    aiThought: "Won the auction! Settling via AsterPay as planned.",
     action: {
       purpose: 'settlement',
       amount: 8.25,
       token: 'USDC',
-      target: 'AsterPay Settlement',
+      target: 'asterpay.xyz',
     },
-    explanation: 'Settlement completed via AsterPay. Funds converted & settled successfully.',
+    aiConclusion: "Settlement complete. Task progressing well within authority bounds.",
     spendSummary: '20.78 / 120 USDC',
   },
 ]
@@ -104,4 +109,23 @@ export const POLICY_SNAPSHOT = {
     maxPerHour: 3,
   },
   forbidden: ['treasury.transfer', 'wallet.withdraw', 'arbitrary payments'],
+}
+
+// Key insight for the demo
+export const KEY_INSIGHT = {
+  title: "What you're seeing",
+  points: [
+    {
+      icon: 'shield',
+      text: 'AI tried unauthorized actions and was blocked',
+    },
+    {
+      icon: 'brain',
+      text: 'AI learned from rejections and adapted',
+    },
+    {
+      icon: 'key',
+      text: 'Your private keys were never exposed',
+    },
+  ],
 }
